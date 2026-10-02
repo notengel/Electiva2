@@ -1,0 +1,31 @@
+name: Alerta
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Ejecutar hola mundo
+        run: node index.js
+
+      - name: Enviar notificación a ntfy
+        env:
+          REPO: ${{ github.repository }}
+          AUTOR: ${{ github.actor }}
+          MENSAJE: ${{ github.event.head_commit.message }}
+        run: |
+          curl -H "Title: Push a main" \
+               -H "Tags: rocket" \
+               -d "$AUTOR hizo push a $REPO: $MENSAJE" \
+               https://ntfy.sh/devops-itla
