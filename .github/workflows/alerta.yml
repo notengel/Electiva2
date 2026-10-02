@@ -25,7 +25,6 @@ jobs:
           AUTOR: ${{ github.actor }}
           MENSAJE: ${{ github.event.head_commit.message }}
         run: |
-          curl -H "Title: Push a main" \
-               -H "Tags: rocket" \
-               -d "$AUTOR hizo push a $REPO: $MENSAJE" \
+          curl -H "Hola mundo W GitHub Actions" \
+               -d "$AUTOR hizo push a $REPO\
                https://ntfy.sh/devops-itla
