@@ -23,8 +23,11 @@ jobs:
         env:
           REPO: ${{ github.repository }}
           AUTOR: ${{ github.actor }}
-          MENSAJE: ${{ github.event.head_commit.message }}
         run: |
-          curl -H "Hola mundo W GitHub Actions" \
-               -d "$AUTOR hizo push a $REPO\
+          SALIDA=$(node index.js)
+          MENSAJE=$(printf ' **¡Ejecución Exitosa!**\n\n```\n%s\n```\n\n%s hizo push a main en %s' "$SALIDA" "$AUTOR" "$REPO")
+          curl -H "Title: GitHub Actions - ITLA" \
+               -H "Tags: github,ci" \
+               -H "Markdown: yes" \
+               -d "$MENSAJE" \
                https://ntfy.sh/devops-itla
